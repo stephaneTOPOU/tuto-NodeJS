@@ -9,7 +9,11 @@ export const login = async(req, res) => {
         const user = db.prepare('SELECT * FROM users WHERE username = ?')
             .get(username)
         if (user != undefined && await verify(user.password, password)) {
-            return 'connecté'
+            req.session.user = {
+                id: user.id,
+                username: user.username
+            }
+            return res.redirect('/')
         }
         params.error = 'Identifiants incorrects'
     }
@@ -21,11 +25,6 @@ export const register = (req, res) => {
 }
 
 export const logout = (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            console.error('Session destruction error:', err);
-            return res.status(500).send('Internal Server Error');
-        }
-        return res.redirect('/login');
-    });
+    req.session.delete()
+    return res.redirect('/')
 }

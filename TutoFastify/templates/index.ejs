@@ -1,34 +1,49 @@
-<%- include('shared/header.ejs'),{title: 'Bonjour, Fastify!'} %>
-<div class="container">
-    <div class="card my-5">
-        <div class="card-header">
-            <h2>Créer un nouvel article</h2>
-        </div>
-        <div class="card-body">
-            <form action="" method="post" class="">
-        <div class="mb-3">
-            <label for="title" class="form-label">Titre</label>
-            <input type="text" class="form-control" id="title" name="title" required>
-        </div>
-        <div class="mb-3">
-            <label for="content" class="form-label">Contenu</label>
-            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Publier</button>
-    </form>
-        </div>
-    </div>
-    
+<%- include('./shared/header.ejs'),{title: 'Bonjour' } %>
+<%- include('./shared/navbar.ejs') %>
 
-    <h1 class="my-5">Bonjour, Fastify!</h1>
-    <div class="row row-cols-2">
-        <% for (const post of posts) { %>
-            <div class="col mb-3">
-                <%- include('./shared/post.ejs', { post }) %>
+
+    <div class="container">
+        <div class="">
+            <div class="card my-3">
+                <% if (true || locals.user) { %>
+                    <div class="card-header">
+                        <h2>Créer un nouvel article</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="post" class="">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Titre</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="content" class="form-label">Contenu</label>
+                                <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Publier</button>
+                        </form>
+                    </div>
             </div>
-        <% } %>
+            <% } else { %>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Bienvenue sur le blog</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Connectez-vous pour créer un nouvel article.</p>
+                    </div>
+                </div>
+                <% } %>
+        </div>
+
+        <h1 class="my-3">Bonjour, Fastify!</h1>
+        <div class="row row-cols-2">
+            <% for (const post of posts) { %>
+                <div class="col mb-3">
+                    <%- include('./shared/post.ejs', { post }) %>
+                </div>
+                <% } %>
+        </div>
     </div>
-</div>
 
 
-<%- include('shared/footer.ejs') %>
+    <%- include('./shared/footer.ejs') %>
